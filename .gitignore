@@ -1,0 +1,15 @@
+# https://github.com/DevInsideYou/scala-seed.g8/blob/master/.gitignore
+
+*.worksheet.sc
+.ammonite/
+.bloop/
+.bsp/
+.dotty-ide*
+.history/
+.idea/
+.metals/
+.scala-build/
+.scala/
+.vscode/
+metals.sbt
+target/
