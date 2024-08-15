@@ -7,8 +7,10 @@ object P3App {
       .dependsOn(
         P0Common.common,
         P2Day3.day3,
-        // P2Day5.day5,
-        P2Day6(),
+        P2Day5.day5,
+        // P2Day6(),
+        P2Day19(),
+        P2Day10(),
         P2TestingLive(),
       ).settings(commonSettings)
   }

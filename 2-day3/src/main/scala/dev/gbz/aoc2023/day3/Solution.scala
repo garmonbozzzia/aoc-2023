@@ -42,6 +42,10 @@ case class Solve(input: String) extends {
 
 case class SolutionLive(day: Int) extends Solution {
   def solve(input: String) = ZIO.succeed(Solve(input).result.toString)
+  def test(input: String): IO[Error,Map[String,String]] = 
+    ZIO.succeed(
+      Map("result" -> Solve(input).result.toString)
+    )
 }
 
 object SolutionLayer {

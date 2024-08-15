@@ -1,6 +1,6 @@
 package dev.gbz
 package aoc2023
-package day6
+package day21
 
 import TraceOps._
 import zio._
@@ -14,5 +14,5 @@ case class SolutionLive(day: Int) extends Solution {
 }
 
 object SolutionLayer {
-  def live = ZLayer.succeed(SolutionLive(6))
+  def live = ZLayer.succeed(SolutionLive(21))
 }
