@@ -16,7 +16,7 @@ object MyApp extends ZIOAppDefault {
       day    <- Solution.day
       input  <- ZIO.readFile(s"data/$day").map(_.trim).mapError(_ => Error.FileNotFound(s"data/$day"))
       _      <- Testing.testAll
-      // result <- Solution.solve(input)
-      // _      <- printLine(result)
+      result <- Solution.solve(input)
+      _      <- printLine(result)
     } yield ()
 }
