@@ -8,25 +8,29 @@ import dev.gbz.aoc2023.Show.defaultShow
 
 case class A2BMap(k1: String, k2: String, mappers: Seq[Mapper])
 
-case object A2BMap {
+case object A2BMap extends IShow[A2BMap] {
   // def apply(s: String) = 
-  implicit val show: Show[A2BMap] = {
-    case _ => "A2BMap"
+  override implicit val show: Show[A2BMap] = {
+    case A2BMap(k1, k2, _) => s"A2BMap($k1, $k2)"
   }
 }
 
 case class Mapper(a: Long, b: Long, l: Long)
-object Mapper { implicit val show: Show[Mapper] = defaultShow }
+object Mapper extends IShow[Mapper]
 
 case class MRange(a: Long, l: Long)
-object MRange { implicit val show: Show[MRange] = defaultShow }
+
+object MRange extends IShow[MRange] {  }
 
 case class Solve(input: String) {
+  // import showObj._
+
+
   // val domain = Domain
   
   val (s"seeds: $seedsStr" :: tail) = input.split("\n\n").toList
 
-  val seeds = seedsStr.split(" ").trace.map(_.toLong).grouped(2).map { case Array(a, l) => MRange(a, l) }.toList.trace
+  val seeds = seedsStr.split(" ").ttrace("Seeds").map(_.toLong).grouped(2).map { case Array(a, l) => MRange(a, l) }.toList.trace
 
   val mappers = tail.map {
     case s"$k1-to-$k2 map:\n$s" => 
