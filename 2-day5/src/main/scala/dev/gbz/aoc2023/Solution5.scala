@@ -16,7 +16,6 @@ case class A2BMap(k1: String, k2: String, mappers: Seq[Mapper]) {
           else Seq(r)
         }
     }.map(_.normalized)
-    // a ++ b
   }
 }
 
@@ -37,16 +36,6 @@ case class Mapper(a: Long, b: Long, l: Long) {
 
   val to = a + l - 1
   val diff = b - a
-  // val mapTo
-  // val map()
-
-  // def map(r: MRange): Option[MRange] = {
-  //   // if(r.from + r.to) 
-  //   val aa = a.max(r.from)
-  //   val bb = (a + l - 1).min(r.to)
-  //   if(r.to < a || to < r.from) None 
-  //   else Some(MRange(aa + diff, bb + diff))
-  // }
 
   def map(r: MRange): Seq[MRange] = 
     Seq(
@@ -95,14 +84,6 @@ case class Solve(input: String) {
       }).toSeq
       A2BMap(k1, k2, seq)
   }.toSeq.trace
-
-  // val ranges = a2bMaps.last.trace.map(MRange(0, 10000000000L)).trace
-
-  // ranges.foldLeft(0) { case (s, MRange(a, b, _)) =>
-    
-  // }
-
-  // Range(1, 2).
 
   val locations = a2bMaps.foldRight(Seq(MRange(0, 10000000000L))) {
     case (a2bMap, ranges) => ranges.flatMap(a2bMap.map)

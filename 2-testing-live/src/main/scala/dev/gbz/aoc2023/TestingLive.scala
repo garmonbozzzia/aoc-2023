@@ -12,8 +12,8 @@ case class TestingLive(solution: Solution) extends Testing {
 
   def expect(input: String, expectedMap: Map[String, String]) = 
     solution.test(input).flatMap { resultMap =>
-      val resKeys = expectedMap.keySet - "result"
-      val expKeys = resultMap.keySet - "result"
+      val resKeys = expectedMap.keySet - "result1" - "result2"
+      val expKeys = resultMap.keySet - "result1" - "result2"
 
       // TODO resKeys diff expKeys
       // TODO expKeys diff resKeys
@@ -24,15 +24,22 @@ case class TestingLive(solution: Solution) extends Testing {
           else fail(key, resultMap(key), expectedMap(key))
         Console.printLine(msg).orDie
       }
-      val (ra, rb) = (resultMap("result"), expectedMap("result"))
-      val resMsg = 
-        if(ra == rb) ok("Result")
-        else fail("Result", ra, rb)
+
+      def resultMsg(s: String) = {
+        val (ra, rb) = (resultMap(s), expectedMap(s))
+        val resMsg = 
+          if(ra == rb) ok(s)
+          else fail(s, ra, rb)
+        Console.printLine(resMsg).orDie
+      }
+
 
       for {
+        _ <- printSeparator
         _ <- ba 
-        _ <- Console.printLine(resMsg).orDie
-        _ <- Console.printLine("="*20).orDie
+        _ <- resultMsg("result1")
+        _ <- resultMsg("result2")
+
       } yield ()
 
       // if(resultMap("result") == expectedMap("answer")) Console.printLine(ok).orDie
@@ -41,6 +48,8 @@ case class TestingLive(solution: Solution) extends Testing {
 
   val s1 = "\n------------\n"
   val s2 = "\n============\n"
+
+  val printSeparator = Console.printLine("="*20).orDie
 
   def f(input: String) = 
     input.split(s2).map {
@@ -53,7 +62,7 @@ case class TestingLive(solution: Solution) extends Testing {
           expect(a, expectedMap)
         case s => ZIO.fail(Error.BadTestData())
       }
-    }
+    } 
 
   def testFile(filename: String) = {
     for {
@@ -66,7 +75,7 @@ case class TestingLive(solution: Solution) extends Testing {
   def testAll: IO[Error,Unit] = 
     Chunk.range(0, 10)
       .map(i => s"data/${solution.day}.$i")
-      .mapZIODiscard(testFile(_).ignore)
+      .mapZIODiscard(testFile(_).ignore) <* printSeparator
 }
 
 package layer {

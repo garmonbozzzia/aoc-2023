@@ -1,5 +1,7 @@
 package dev.gbz.aoc2023
 
+import dev.gbz.aoc2023.TraceOps.PrintOps
+
 object Helpers {
 
   def yellow(s: String) = scala.Console.YELLOW + s + scala.Console.RESET
@@ -14,4 +16,14 @@ object Helpers {
       case Right(b) => b
     }
   }
+
+  def evalAndTrace[A, B, C: Show](a: A)(check: A => C)(f: A => Either[A, B]): B = 
+    eval((1, a)) { case (c, a) =>
+      f(a) match {
+        case Left(v) => 
+          (c, check(v)).trace
+          Left((c + 1, v))
+        case Right(v) => Right(v)
+      }
+    }
 }

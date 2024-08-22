@@ -8,11 +8,17 @@ import Helpers._
 object TraceOps {
 
   implicit class PrintOps[A](val a: A) extends AnyVal {
+
+    def pauseIf(pred: A => Boolean)(implicit S: Show[A]): A = {
+      if(pred(a)) pause
+      else a
+    }
+
     def pause(implicit S: Show[A]): A = {
       print(S.show(a))
+      print(green(" -->"))
       val b = scala.io.StdIn.readLine()
       if(b == "q") throw new Exception("Exit")
-      println(green("-->"))
       a
     }
 
@@ -35,13 +41,13 @@ object TraceOps {
 
     def tap[B](f: A => B): A = { f(a); a }
 
-    def pause = {
-      print(a)
-      val b = scala.io.StdIn.readLine()
-      if(b == "q") throw new Exception("Exit")
-      println(green("-->"))
-      a
-    }
+    // def pause = {
+    //   print(a)
+    //   val b = scala.io.StdIn.readLine()
+    //   if(b == "q") throw new Exception("Exit")
+    //   println(green("-->"))
+    //   a
+    // }
 
     def ttrace(tag: String)(implicit S: Show[A]): A = {
       println(s"${yellow(tag)}: ${S.show(a)}")
@@ -57,6 +63,8 @@ object TraceOps {
       if(p(a)) println(f(a))
       a
     }
+
+    def show(implicit S: Show[A]): String = implicitly[Show[A]].show(a)
   }
 
   

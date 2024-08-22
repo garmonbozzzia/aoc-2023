@@ -7,22 +7,6 @@ import zio._
 import dev.gbz.aoc2023.Helpers.eval
 import dev.gbz.aoc2023.Show.defaultShow
 
-case class P(i: Int, j: Int) {
-  def u = P(i - 1, j)
-  def d = P(i + 1, j)
-  def l = P(i, j - 1)
-  def r = P(i, j + 1)
-
-  def to(dir: Char) = dir match {
-    case 'v' => d
-    case '^' => u
-    case '>' => r
-    case '<' => l
-  }
-}
-
-object P { implicit val show: Show[P] = defaultShow }
-
 object DirOps {
   private val inout1 = Seq (
     'L' -> ('v', '>'),
@@ -84,7 +68,7 @@ case class Solution10(input: String) {
   (m, n).trace
 
   implicit class SetPointOps(set: Set[P]) {
-    import neighborhood._
+    import PointNeighborhood._
     private def add: (P, P) => P = {
       case (P(a, b), P(c, d)) => P(a + c, b + d)
     }
@@ -99,7 +83,7 @@ case class Solution10(input: String) {
   // input.indices.flatMap()
   // (0 until m).flatMap(i => )
 
-  object neighborhood {
+  object PointNeighborhood {
     val ul = P(-1, -1)
     val ur = P(-1,  1)
     val dl = P( 1, -1)
@@ -114,7 +98,7 @@ case class Solution10(input: String) {
   }
 
   val pattern = {
-    import neighborhood._
+    import PointNeighborhood._
     Map(
       '.' -> Set.empty[P],
       '|' -> Set(c, u, d),
