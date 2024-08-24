@@ -13,8 +13,8 @@ object P3App {
         P2Day19(),
         P2Day16(),
         P2Day10(),
+        P2Day21() % cctt,
         day17,
-        P2TestingLive(),
       ).settings(commonSettings)
   }
 

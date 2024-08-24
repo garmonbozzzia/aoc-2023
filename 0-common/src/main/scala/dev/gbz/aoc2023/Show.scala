@@ -11,6 +11,7 @@ object Show {
 
   implicit class Ops[A: Show](val a: A) {
     def show: String = implicitly[Show[A]].show(a)
+    def show[B](b: B)(implicit abShow: Show[(A, B)]): String = abShow.show(a, b)
   }
 
   implicit def charShow: Show[Char] = defaultShow

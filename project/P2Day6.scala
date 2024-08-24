@@ -5,7 +5,7 @@ object P2Day6 {
   def apply() = day6
 
   lazy val day6 = 
-    project.in(file("2-day6"))
+    project.in(file("2-days/day6"))
       .dependsOn(P0Common())
       .settings(commonSettings)
 }

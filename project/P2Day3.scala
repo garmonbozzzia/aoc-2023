@@ -3,7 +3,7 @@ import Settings._
 
 object P2Day3 {
   lazy val day3 = 
-    project.in(file("2-day3"))
+    project.in(file("2-days/day3"))
       .dependsOn(P0Common.common)
       .settings(commonSettings)
   }

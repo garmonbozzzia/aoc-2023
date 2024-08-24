@@ -9,6 +9,7 @@ addCommandAlias("cd", "project")
 addCommandAlias("c", "compile")
 addCommandAlias("ca", "Test / compile")
 addCommandAlias("t", "test")
+addCommandAlias("tt", "testOnly -- -t ")
 addCommandAlias("r", "run")
 addCommandAlias("rs", "reStart")
 addCommandAlias("np", "cd root; g8Scaffold project")
@@ -39,6 +40,7 @@ onLoadMessage +=
       |│ ${styled("c")}           │ compile           │
       |│ ${styled("ca")}          │ compile all       │
       |│ ${styled("t")}           │ test              │
+      |│ ${styled("tt")}          │ test only tag     │
       |│ ${styled("r")}           │ run               │
       |│ ${styled("np")}          │ new project       │
       |│ ${styled("rs")}          │ reStart           │
