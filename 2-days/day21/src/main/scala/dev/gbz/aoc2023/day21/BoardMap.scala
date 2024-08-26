@@ -4,18 +4,21 @@ package day21
 
 import TraceOps._
 
-case class BoardMap(map: Map[Set[P], Char], default: Char) 
+case class BoardMap(default: Char, sets: (Set[P], Char)*) 
 
 // case class BoardMap(map: Map[Set[P], Char], default: Char)
 
 object BoardMap {
-  implicit val setShow: Show[BoardMap] = { case BoardMap(map, default) => 
-    val is = map.keys.flatten.map(_.i)
-    val js = map.keys.flatten.map(_.j)
-    val (i0, i1) = (is.min, is.max).trace
-    val (j0, j1) = (js.min, js.max).trace
+
+  // def app
+
+  implicit val setShow: Show[BoardMap] = { case BoardMap(default, sets @ _*) => 
+    val is = sets.flatMap(_._1.map(_.i))
+    val js = sets.flatMap(_._1.map(_.j))
+    val (i0, i1) = (is.min, is.max)
+    val (j0, j1) = (js.min, js.max)
     Seq.tabulate(i1 - i0 + 1, j1 - j0 + 1) { (i, j) => 
-      map.collectFirst {
+      sets.collectFirst {
         case (set, c) if set.contains(P(i0 + i, j0 + j)) => c
       }.getOrElse(default)
     }.map(_.mkString).mkString("\n")

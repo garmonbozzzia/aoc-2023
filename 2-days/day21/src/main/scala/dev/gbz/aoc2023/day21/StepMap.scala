@@ -12,8 +12,8 @@ case class StepMap(steps: Int, front: Set[P], s1: Set[P], s2: Set[P]) {
     if(front.isEmpty) StepMap(steps + 1, front, s2, s1)
     else {
       val updatedFront = front.expanded4.filterNot(border).filterNot(s1)
-      this.trace
-      StepMap(steps + 1, updatedFront, s2 ++ front, s1).trace
+      // this.trace
+      StepMap(steps + 1, updatedFront, s2 ++ front, s1)//.trace
     }
   }
 }
@@ -30,25 +30,23 @@ object StepMap {
   implicit val showC: Show[(StepMap, Set[P], Set[P])] = { case (sm, border, outer) =>
 
     sm.show + "\n" + BoardMap(
-      Map(
-        // sm.front.filter(outer) -> 'x',
-        sm.s1 -> ' ',
-        sm.front -> 'O',
-        sm.s2 -> ' ',
-        border -> ' ',
-      ), '.'
+      '.',
+      sm.s1 -> ' ',
+      sm.front -> 'O',
+      sm.s2 -> ' ',
+      border -> ' ',
     ).show
   }
 
   implicit val showB: Show[(StepMap, Set[P])] = { case (sm, border) =>
 
-    sm.show + "\n" + BoardMap(
-      Map(
-        sm.s1 -> '-',
-        sm.front -> 'O',
-        sm.s2 -> 'o',
-        border -> '#',
-      ), ' '
+    sm.show + "\n" + 
+    BoardMap(
+      ' ',
+      sm.s1 -> '-',
+      sm.front -> 'O',
+      sm.s2 -> 'o',
+      border -> '#',
     ).show
   }
 }

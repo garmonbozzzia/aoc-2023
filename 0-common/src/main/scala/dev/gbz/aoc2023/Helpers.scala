@@ -17,11 +17,12 @@ object Helpers {
     }
   }
 
-  def evalAndTrace[A, B, C: Show](a: A)(check: A => C)(f: A => Either[A, B]): B = 
+  def evalAndPause[A, B](a: A)(f: A => Either[A, B]): B = 
     eval((1, a)) { case (c, a) =>
+      c.ttrace("Eval step")
       f(a) match {
         case Left(v) => 
-          (c, check(v)).trace
+          "".pause
           Left((c + 1, v))
         case Right(v) => Right(v)
       }

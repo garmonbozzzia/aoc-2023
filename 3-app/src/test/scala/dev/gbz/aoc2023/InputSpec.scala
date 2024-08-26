@@ -9,6 +9,7 @@ import dev.gbz.aoc2023.TraceOps.PrintOps
 // import dev.gbz.aoc2023.day17.Board.expected
 
 import day21._
+import dev.gbz.aoc2023.day17.Board.expected
 
 case class Expectation(name: String, input: String, expected: Map[String, String]) {
   def makeSuite = SolutionSpec(name, input, expected).makeSuite
@@ -29,11 +30,18 @@ object InputSpec extends ZIOSpecDefault  {
         s.split(sep1) match { 
           case Array(input, data) =>
             val expectedMap = data.split("\n").map {
-              case s"$key=$value" => (key.trim, value.trim)
-              case s"- $key:$value" => (key.trim, value.trim)
-              case result         => ("result", result)
+              case s"$key=$value" => 
+                (key.trim, value.trim)
+              case s"- $key:$value" => 
+                (key.trim, value.trim)
+              case result         => 
+                ("result", result)
             }.toMap
             Expectation(s"case $day.$i.$j", input, expectedMap)
+
+          case s => 
+            "ERR".trace
+            ???
         }
       }
 

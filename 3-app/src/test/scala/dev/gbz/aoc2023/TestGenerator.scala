@@ -11,17 +11,6 @@ object TestGenerator {
   val sep1 = "\n------------\n"
   val sep2 = "\n============\n"
 
-  def makeTest(input: String, expectedMap: Map[String, String]) = 
-    expectedMap.map { case (k, v) =>
-      test(k) {
-        assertTrue { 
-          val kk = k + k
-          val k4 = kk + kk
-          (kk + k4).size.toString == v 
-        }
-      } 
-    }
-
   def parse(s: String) = 
     Chunk.fromArray(s.split(sep2))
       .mapZIO {
@@ -35,7 +24,6 @@ object TestGenerator {
             ZIO.succeed(Expect(input, expectedMap))
         }
       }
-      
 
   def testFile(filename: String) = 
     for {
@@ -43,8 +31,7 @@ object TestGenerator {
                 .mapError(_ => Error.FileNotFound(filename))
       test <- parse(s)
       // _     <- test.mapZIODiscard(x => expect(x.input, x.expected)) //ZIO.foreach(test)
-    } yield ()
-  
+    } yield ()  
 }
 
 // object SomeTests extends ZIOSpecDefault {

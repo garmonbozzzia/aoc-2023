@@ -71,11 +71,11 @@ case class Board2(
     }
   }
 
-  def result = evalAndTrace(
+  def result = evalAndPause(
     Set.empty[PathEnd] +
       VPathEnd(0 ,0, Path(Seq.empty)) +
       HPathEnd(0, 0, Path(Seq.empty))
-   ) (_.size) {
+   ) {
     case set if set.isEmpty => 
       Right(
         stateV.last._1.min(stateH.last._1).trace,
