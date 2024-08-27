@@ -14,11 +14,11 @@ object Root {
       P2Day16(),
       P2Day17(),
       P2Day21(),
-      P3App.app
+      P3App.aoc2023
     )
     // .aggregate(P0Common.common, module1, module2, aa)
     .settings(
-      name := "aoc2023",
+      name := "root",
       commonSettings
     )
 }

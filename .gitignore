@@ -13,3 +13,4 @@
 .vscode/
 metals.sbt
 target/
+notes.md

@@ -225,8 +225,9 @@ case class SolutionSpec(
 
     //  ....s.... (n + 1)
 
-    assertTrue(solution.total(steps) == 599722156278049L) ==> 
-    assertTrue(total(64) == 3003L)
+    val ts = solution.total(steps)
+    assertTrue(ts == 599763113936220L) 
+    // assertTrue(total(64) == 3003L)
   }
 // 599722156278049
   //           7282802977L

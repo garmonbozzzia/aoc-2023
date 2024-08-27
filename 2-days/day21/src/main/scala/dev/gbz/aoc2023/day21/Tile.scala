@@ -10,8 +10,8 @@ import dev.gbz.aoc2023.Helpers.evalAndPause
 case class Tile(innerBorder: Set[P], n: Int) {
 
   val outerBorder = 
-    Set.range(0, n).flatMap(ij => 
-      Set(P(-1, ij), P(ij, -1), P(ij, n), P(n, ij))
+    Set.range(-2, n + 2).flatMap(ij => 
+      Set(P(-2, ij), P(ij, -2), P(ij, n + 1), P(n + 1, ij))
     )
 
   val border = innerBorder ++ outerBorder
@@ -28,7 +28,7 @@ case class Tile(innerBorder: Set[P], n: Int) {
   def shift3 = ff(identity, mirror)
   def shift4 = ff(mirror, mirror)
 
-  def expansion(i: Int, j: Int) = 
+  def expansion2(i: Int, j: Int) = 
     eval(
       StepMap(0, Set(P(i, j)), Set.empty, Set.empty), Chunk(0), 0
     ) { case (stepMap, res, i) => 
@@ -37,6 +37,26 @@ case class Tile(innerBorder: Set[P], n: Int) {
         val next = stepMap.next(border)
         // if(i < 5) (next, border).ttrace("AAAAAAAAA")
         Left(next, res.appended(stepMap.total), i + 1)
+      }
+    }
+
+  def isInner(p: P) = 
+    0 <= p.i &&
+    0 <= p.j &&
+    p.i < n &&
+    p.j < n
+
+  def expansion(i: Int, j: Int) = 
+    eval(
+      Set(P(i, j)), Set.empty[P], Set.empty[P], Chunk(0)
+    ) { case (front, s1, s2, res) => 
+      if(front.isEmpty) Right(Values(res.tail.take(2 * n + 1), n))
+      else {
+        val next = front.expanded4.filterNot(border).filterNot(s1)
+        val updatedFront = front.expanded4.filterNot(border).filterNot(s1)
+        // if(i < 5) (next, border).ttrace("AAAAAAAAA")
+        val total = front.count(isInner) + s2.count(isInner)
+        Left(updatedFront, s2 ++ front, s1, res.appended(total))
       }
     }
 }
